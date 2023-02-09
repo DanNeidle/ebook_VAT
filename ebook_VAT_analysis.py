@@ -27,8 +27,11 @@ chart_title = "20% ebook VAT cut"
 # this is the target to analyse
 target_item = "EBOOKS"
 
-# this is the month before the relevant VAT cut
+# this is the month to which we normalise all data, usually the period before the relevant VAT cut
 normalising_target_date = datetime.datetime(year=2020, month=4, day=1)
+
+# this is the month where the VAT cut takes effect
+change_of_law_date = datetime.datetime(year=2020, month=5, day=1)
 
 # these are comparables, taken from column C of the spreadsheet
 items_to_find = ["BOOK FICTION P/BACK TOP 10", "BOOK-NON-FICTION-PAPER-BACK", "MUSIC STREAMING SUBSCRIPTIONS",
@@ -115,7 +118,7 @@ for x in prices_on_date:
 change_in_average_price = []
 
 # this prints t-test for all products
-months_for_t = 6
+months_for_t = 23
 months_for_bar_chart = 23
 
 for item in prices_on_date:
@@ -215,7 +218,7 @@ for plot in plots:
         secondary_y=False)
 
     # now add line and annotation showing moment VAT was removed
-    fig_prices.add_vline(x=normalising_target_date.timestamp() * 1000, line_dash="dot",
+    fig_prices.add_vline(x=change_of_law_date.timestamp() * 1000, line_dash="dot",
                   annotation_text=chart_title,
                   annotation_position="top right")
 
